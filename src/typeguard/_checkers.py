@@ -8,6 +8,7 @@ import warnings
 from enum import Enum
 from inspect import Parameter, isclass, isfunction
 from io import BufferedIOBase, IOBase, RawIOBase, TextIOBase
+from unittest.mock import Mock
 from textwrap import indent
 from typing import (
     IO,
@@ -600,6 +601,9 @@ def check_type_internal(value: Any, annotation: Any, memo: TypeCheckMemo) -> Non
     :param memo: a memo object containing configuration and information necessary for
         looking up forward references
     """
+
+    if isinstance(value, Mock):
+        return
 
     if isinstance(annotation, ForwardRef):
         try:
